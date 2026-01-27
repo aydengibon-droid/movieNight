@@ -1,7 +1,7 @@
 import { moviesCollection } from "./myMongo.js"
 
-const getMovies = (res) => {
-    moviesCollection.find({}, {limit: 10, sort: {year: -1}})
+const getMovies = (res,type) => {
+    moviesCollection.find({type:type}, {limit: 10, sort: {year: -1}})
     .project({
         title:1,
         plot:1,

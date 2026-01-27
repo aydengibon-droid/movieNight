@@ -11,15 +11,14 @@ app.get('/', (req, res) => {
   res.send('<a href="/show"> Badness It Choose Me </a>')
 })
 
-app.get("/show", (req, res) => {
-  res.send({ "msg": "This is for shows" })
-})
-
 app.get("/calc/rect/:length/:width", (req, res) => {
   let data = req.params
   res.status(200).send(`The area of a rectangle 6 ${data.length} x ${data.width} is ${data.length * data.width}`)
 })
 
-app.get("/movies", (req, res) => {
-  getMovies(res)
+app.get("/:type", (req, res) => {
+  let type = req.params.type.toLowerCase()
+  if (type != "movie" && type != "series")
+    res.status(400).send({"error": "Invalid URI" })
+  getMovies(res, type)
 })
