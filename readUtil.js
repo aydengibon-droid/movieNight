@@ -35,7 +35,7 @@ const getMovie = (res, ObjectID, movieID) => {
         {
             projection: {
                 fullplot: 1,
-                imdb: { rating: 1},
+                imdb: { rating: 1 },
                 year: 1,
                 title: 1,
                 plot: 1,
@@ -50,13 +50,24 @@ const getMovie = (res, ObjectID, movieID) => {
 
         .then(doc => {
             if (!doc)
-            doc = { "error": "no data found" }
-        if (doc.released) {
-            doc.released = format(doc.released, "MMM,DD,YYYY")
-            console.log(doc.released)
-        }
+                doc = { "error": "no data found" }
+            if (doc.released) {
+                doc.released = format(doc.released, "MMM,DD,YYYY")
+                console.log(doc.released)
+            }
             res.status(200).json(doc)
         })
 }
+const getFaves = (res) => {
+    favCollection
+        .find({})
+        .toArray()
+        .then(FavDocs => {
+            if (!FavDocs)
+                favDocs = { "error": "no data found" }
+            res.status(200).json(FavDocs)
+            console.log(FavDocs)
+        })
+}
 
-export { getMovies, getMovie }
+export { getMovies, getMovie, getFaves }
